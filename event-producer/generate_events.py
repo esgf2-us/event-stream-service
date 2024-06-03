@@ -9,7 +9,7 @@ def print_error(message):
     print(message, file=sys.stderr)
 
 
-def convert2stac(dataset_doc):
+def convert(dataset_doc):
     new_dataset_id = dataset_doc.get("instance_id")
 
     del dataset_doc["data_node"]
@@ -44,6 +44,122 @@ def convert2stac(dataset_doc):
     return dataset_doc
 
 
+def convert2stac(dataset_doc):
+    dataset_metadata = {}
+    properties = {}
+
+    property_keys = [
+        "version",
+        "access",
+        "activity_drs",
+        "activity_id",
+        "cf_standard_name",
+        "citation_url",
+        #"data_node",
+        "data_spec_version",
+        "dataset_id_template_",
+        #"datetime_start",
+        #"datetime_stop",
+        "directory_format_template_",
+        "experiment_id",
+        "experiment_title",
+        "frequency",
+        "further_info_url",
+        #"north_degrees",
+        #"west_degrees",
+        #"south_degrees",
+        #"east_degrees",
+        #"geo",
+        #"geo_units",
+        "grid",
+        "grid_label",
+        #"height_bottom",
+        #"height_top",
+        #"height_units",
+        #"index_node",
+        #"instance_id",
+        "institution_id",
+        "latest",
+        "master_id",
+        "member_id",
+        "metadata_format",
+        "mip_era",
+        "model_cohort",
+        "nominal_resolution",
+        #"number_of_aggregations",
+        #"number_of_files",
+        "pid",
+        "product",
+        "project",
+        "realm",
+        "replica",
+        #"size",
+        "source_id",
+        "source_type",
+        "sub_experiment_id",
+        "table_id",
+        #"title",
+        #"type",
+        #"url",
+        "variable",
+        "variable_id",
+        "variable_long_name",
+        "variable_units",
+        "variant_label",
+        #"xlink",
+        #"_version_",
+        "retracted",
+        #"_timestamp",
+        #"score",
+    ]
+
+    for k in property_keys:
+        properties[k] = dataset_doc.get(k)
+    properties["dataset_id"] = dataset_doc.get("instance_id")
+
+    dataset_metadata["start_datetime"] = dataset_doc.get("datetime_start")
+    dataset_metadata["end_datetime"] = dataset_doc.get("datetime_end")
+    dataset_metadata["size"] = dataset_doc.get("size")
+    dataset_metadata["title"] = dataset_doc.get("title")
+    dataset_metadata["_version"] = dataset_doc.get("_version_")
+    dataset_metadata["_score"] = dataset_doc.get("score")
+    dataset_metadata["bbox"] = [
+        dataset_doc.get("west_degrees"),
+        dataset_doc.get("south_degrees"),
+        dataset_doc.get("east_degrees"),
+        dataset_doc.get("north_degrees"),
+    ]
+    dataset_metadata["collection"] = dataset_doc.get("project")[0].lower()
+    dataset_metadata["stac_version"] = 1
+    dataset_metadata["type"] = "item"
+
+    #dataset_metadata["location"] = dataset_doc.get("")
+
+    facet_dict = {
+        "root": "/css03_data"
+    }
+    for f in settings.facets:
+        if f in dataset_doc:
+            facet = dataset_doc.get(f)
+            if isinstance(facet, list):
+                facet_dict[f] = facet[0]
+            else:
+                facet_dict[f] = "v" + facet + "/"
+    directory_string = dataset_doc.get(
+        "directory_format_template_")[0] % facet_dict
+
+    dataset_metadata["links"] = [
+        {
+            "rel": "alternative",
+            "type": "text/html",
+            "href": settings.location_url + directory_string,
+            "title": "ANL - Globus Webapp File Manager",
+        }
+    ]
+    dataset_metadata["properties"] = properties
+    return dataset_metadata
+
+
 def get_esgf_response(path, document_type, offset, limit):
     # Search for datasets/files
     project = path.split("/")[0]
@@ -54,7 +170,7 @@ def get_esgf_response(path, document_type, offset, limit):
         "type": document_type,
     }
 
-    # Add facets toa query params
+    # Add facets to query params
     if path:
         facets = path.split("/")
         for i, f in enumerate(facets):
