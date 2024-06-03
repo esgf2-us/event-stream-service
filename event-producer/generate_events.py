@@ -25,7 +25,7 @@ def convert2stac(dataset_doc):
     }
 
     facet_dict = {
-            "root": "/css03_data"
+        "root": "/css03_data"
     }
     for f in settings.facets:
         if f in dataset_doc:
@@ -34,7 +34,8 @@ def convert2stac(dataset_doc):
                 facet_dict[f] = facet[0]
             else:
                 facet_dict[f] = "v" + facet + "/"
-    directory_string = dataset_doc.get("directory_format_template_")[0] % facet_dict
+    directory_string = dataset_doc.get(
+        "directory_format_template_")[0] % facet_dict
     dataset_doc["location"] = {
         settings.location_tag: {
             "globus": settings.location_url + directory_string
@@ -64,13 +65,13 @@ def get_esgf_response(path, document_type, offset, limit):
     # print(params)
 
     r = None
-    while r == None:
+    while r is None:
         try:
             r = requests.get(settings.esgf_search_url, params=params)
-        except:
+        except Exception as e:
             print_error("TimeoutError or other exception")
             time.sleep(30)
-
+    
     if r.status_code != 200:
         print_error(f"The ESGF Index server returned {r.status_code}")
         sys.exit(1)
@@ -90,7 +91,7 @@ def get_esgf_response(path, document_type, offset, limit):
 
 def main(path):
     # Get the number of datasets in the path
-    response = get_esgf_response(path, "Dataset", 0, 0) 
+    response = get_esgf_response(path, "Dataset", 0, 0)
     dataset_num_found = response.get("numFound", 0)
     if dataset_num_found == 0:
         print_error("No datasets found")
