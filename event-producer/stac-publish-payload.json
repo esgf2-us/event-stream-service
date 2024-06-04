@@ -1,0 +1,77 @@
+{
+    "authorization_server": "Globus",
+    "created": datetime.datetime(2024, 6, 4, 10, 52, 4, 204423),
+    "event": "publish",
+    "user": "lukasz@uchicago.edu",
+    "metadata": {
+        "start_datetime": "1848-10-25T12:00:00Z",
+        "end_datetime": "2013-08-15T12:00:00Z",
+        "size": 7163813978,
+        "title": "CMIP6.AerChemMIP.AS-RCEC.TaiESM1.hist-piNTCF.r1i1p1f1.AERmon.zg.gn",
+        "_version": 1781605657156255744,
+        "_score": 1.0,
+        "bbox": [0.0, -90.0, 358.75, 90.0],
+        "collection": "cmip6",
+        "stac_version": 1,
+        "type": "item",
+        "links": [
+            {
+                "rel": "alternative",
+                "type": "text/html",
+                "href": "https://app.globus.org/file-manager?origin_id=8896f38e-68d1-4708-bce4-b1b3a3405809&origin_path=/css03_data/CMIP6/AerChemMIP/AS-RCEC/TaiESM1/hist-piNTCF/r1i1p1f1/AERmon/zg/gn/v20210603/",
+                "title": "ANL - Globus Webapp File Manager",
+            }
+        ],
+        "properties": {
+            "version": "20210603",
+            "access": ["HTTPServer", "Globus"],
+            "activity_drs": ["AerChemMIP"],
+            "activity_id": ["AerChemMIP"],
+            "cf_standard_name": ["geopotential_height"],
+            "citation_url": [
+                "http://cera-www.dkrz.de/WDCC/meta/CMIP6/CMIP6.AerChemMIP.AS-RCEC.TaiESM1.hist-piNTCF.r1i1p1f1.AERmon.zg.gn.v20210603.json"
+            ],
+            "data_spec_version": None,
+            "dataset_id_template_": [
+                "%(mip_era)s.%(activity_drs)s.%(institution_id)s.%(source_id)s.%(experiment_id)s.%(member_id)s.%(table_id)s.%(variable_id)s.%(grid_label)s"
+            ],
+            "directory_format_template_": [
+                "%(root)s/%(mip_era)s/%(activity_drs)s/%(institution_id)s/%(source_id)s/%(experiment_id)s/%(member_id)s/%(table_id)s/%(variable_id)s/%(grid_label)s/%(version)s"
+            ],
+            "experiment_id": ["hist-piNTCF"],
+            "experiment_title": [
+                "historical forcing, but with pre-industrial NTCF emissions"
+            ],
+            "frequency": ["mon"],
+            "further_info_url": [
+                "https://furtherinfo.es-doc.org/CMIP6.AS-RCEC.TaiESM1.hist-piNTCF.none.r1i1p1f1"
+            ],
+            "grid": ["finite-volume grid with 0.9x1.25 degree lat/lon resolution"],
+            "grid_label": ["gn"],
+            "institution_id": ["AS-RCEC"],
+            "latest": True,
+            "master_id": "CMIP6.AerChemMIP.AS-RCEC.TaiESM1.hist-piNTCF.r1i1p1f1.AERmon.zg.gn",
+            "member_id": ["r1i1p1f1"],
+            "metadata_format": None,
+            "mip_era": ["CMIP6"],
+            "model_cohort": ["Registered"],
+            "nominal_resolution": ["100 km"],
+            "pid": ["hdl:21.14100/b5e512a3-aa20-362e-a0c1-f95dc8bd880e"],
+            "product": ["model-output"],
+            "project": ["CMIP6"],
+            "realm": ["atmos"],
+            "replica": True,
+            "source_id": ["TaiESM1"],
+            "source_type": ["AOGCM", "AER", "CHEM"],
+            "sub_experiment_id": ["none"],
+            "table_id": ["AERmon"],
+            "variable": ["zg"],
+            "variable_id": ["zg"],
+            "variable_long_name": ["Geopotential Height"],
+            "variable_units": ["m"],
+            "variant_label": ["r1i1p1f1"],
+            "retracted": False,
+            "dataset_id": "CMIP6.AerChemMIP.AS-RCEC.TaiESM1.hist-piNTCF.r1i1p1f1.AERmon.zg.gn.v20210603",
+        },
+    },
+}
